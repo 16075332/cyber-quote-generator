@@ -2,33 +2,17 @@ import React, { useState } from "react";
 import "./styles.css";
 import logo from "./assets/bridgestone.png";
 
+/* ─────────── Quotes ─────────── */
 const quotes = [
-  {
-    quote: "Cybersecurity is much more than a matter of IT.",
-    author: "Stéphane Nappo",
-  },
-  {
-    quote: "Security is not a product, but a process.",
-    author: "Bruce Schneier",
-  },
-  {
-    quote: "Only amateurs attack machines; professionals target people.",
-    author: "Bruce Schneier",
-  },
-  {
-    quote: "The best defense against social engineering is education.",
-    author: "Kevin Mitnick",
-  },
-  {
-    quote: "Hackers don't break in — they log in.",
-    author: "Anonymous",
-  },
-  {
-    quote: "Think before you click. One mistake could cost everything.",
-    author: "Cyber Awareness Reminder",
-  },
+  { quote: "Cybersecurity is much more than a matter of IT.", author: "Stéphane Nappo" },
+  { quote: "Security is not a product, but a process.", author: "Bruce Schneier" },
+  { quote: "Only amateurs attack machines; professionals target people.", author: "Bruce Schneier" },
+  { quote: "The best defense against social engineering is education.", author: "Kevin Mitnick" },
+  { quote: "Hackers don't break in — they log in.", author: "Anonymous" },
+  { quote: "Think before you click. One mistake could cost everything.", author: "Cyber Awareness Reminder" },
 ];
 
+/* ─────────── Quiz questions ─────────── */
 const questions = [
   {
     question: "What is phishing?",
@@ -64,9 +48,9 @@ const questions = [
     question: "Which of the following is a safe practice?",
     options: [
       "Sharing passwords with coworkers",
-      "Using multi-factor authentication",
-      "Using public Wi-Fi for confidential work",
-      "Clicking pop-ups for updates",
+      "Using multi‑factor authentication",
+      "Using public Wi‑Fi for confidential work",
+      "Clicking pop‑ups for updates",
     ],
     correct: 1,
   },
@@ -83,44 +67,25 @@ const questions = [
 ];
 
 export default function App() {
+  /* page can be 'quote', 'quiz', or 'result' */
   const [page, setPage] = useState("quote");
 
-  // Quote state
-  const [currentQuote, setCurrentQuote] = useState(getRandomQuote());
+  /* Quote state */
+  const [currentQuote, setCurrentQuote] = useState(
+    quotes[Math.floor(Math.random() * quotes.length)]
+  );
 
-  // Quiz state
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [showAnswerResult, setShowAnswerResult] = useState(false);
+  /* Quiz state */
+  const [currentQ, setCurrentQ] = useState(0);
+  const [selected, setSelected] = useState(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [correctCount, setCorrectCount] = useState(0);
 
-  function getRandomQuote() {
-    return quotes[Math.floor(Math.random() * quotes.length)];
-  }
+  /* helpers */
+  const percentage = Math.round((correctCount / questions.length) * 100);
+  const passed = percentage >= 80;
 
-  // Quote handlers
-  function handleNewQuote() {
-    setCurrentQuote(getRandomQuote());
-  }
-
-  function copyToClipboard() {
-    const text = `"${currentQuote.quote}" — ${currentQuote.author}`;
-    navigator.clipboard.writeText(text);
-    alert("Quote copied to clipboard!");
-  }
-
-  // Quiz handlers
-  function selectOption(index) {
-    if (showAnswerResult) return;
-    setSelectedOption(index);
-    setShowAnswerResult(true);
-  }
-
-  function nextQuestion() {
-    setSelectedOption(null);
-    setShowAnswerResult(false);
-    setCurrentQuestionIndex((prevIndex) => (prevIndex + 1) % questions.length);
-  }
-
+  /* ───────────────────────────── Quote page */
   if (page === "quote") {
     return (
       <div className="app">
@@ -128,20 +93,29 @@ export default function App() {
         <h1>🔐 Cybersecurity Awareness</h1>
         <p className="slogan">B-SAFE! B-SECURE! Security Starts With You.</p>
 
-        <div className="quote-card">
+        <div className="quote-card fixed-height">
           <p className="quote">“{currentQuote.quote}”</p>
           <p className="author">— {currentQuote.author}</p>
+
           <div className="buttons">
-            <button onClick={handleNewQuote}>New Quote</button>
-            
+            <button
+              className="buttons-button black-button"
+              onClick={() =>
+                setCurrentQuote(
+                  quotes[Math.floor(Math.random() * quotes.length)]
+                )
+              }
+            >
+              New Quote
+            </button>
           </div>
         </div>
 
         <div style={{ marginTop: "2rem" }}>
           <button
-            onClick={() => setPage("quiz")}
             className="buttons-button"
             style={{ padding: "0.75rem 2rem" }}
+            onClick={() => setPage("quiz")}
           >
             Take the Cybersecurity Quiz →
           </button>
@@ -150,51 +124,124 @@ export default function App() {
     );
   }
 
-  // Quiz page
-  const currentQuestion = questions[currentQuestionIndex];
-  const isCorrect = selectedOption === currentQuestion.correct;
+  /* ───────────────────────────── Result page */
+  if (page === "result") {
+    return (
+      <div className="app">
+        <img src={logo} alt="Bridgestone Logo" className="logo" />
+        <h1>🔐 Quiz Results</h1>
+
+        <div
+          className={`result-banner ${
+            passed ? "result-pass" : "result-fail"
+          }`}
+        >
+          <p>
+            You scored {correctCount} / {questions.length} ({percentage}%)
+          </p>
+          {passed ? (
+            <p>🎉 Great job! You passed.</p>
+          ) : (
+            <>
+              <p>🚦 Score below 80 %. Please try again.</p>
+              <button
+                className="buttons-button black-button"
+                onClick={() => {
+                  /* reset state */
+                  setCurrentQ(0);
+                  setCorrectCount(0);
+                  setSelected(null);
+                  setShowFeedback(false);
+                  setPage("quiz");
+                }}
+              >
+                Restart Quiz
+              </button>
+            </>
+          )}
+        </div>
+
+        <div style={{ marginTop: "2rem" }}>
+          <button
+            onClick={() => setPage("quote")}
+            className="buttons-button"
+            style={{
+              background: "transparent",
+              color: "var(--bridgestone-red)",
+              border: "1px solid var(--bridgestone-red)",
+            }}
+          >
+            ← Back to Quotes
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* ───────────────────────────── Quiz page */
+  const thisQ = questions[currentQ];
+  const isCorrect = selected === thisQ.correct;
 
   return (
     <div className="app">
       <img src={logo} alt="Bridgestone Logo" className="logo" />
-      <h1>🔐 Cybersecurity Awareness Quiz</h1>
+      <h1>🔐 Cybersecurity Quiz</h1>
       <p className="slogan">B-SAFE! B-SECURE! Security Starts With You.</p>
 
       <div className="quote-card quiz-card">
-        <h2>Quick Quiz</h2>
-        <p className="quote question">{currentQuestion.question}</p>
+        <h2>
+          Question {currentQ + 1} / {questions.length}
+        </h2>
+        <p className="quote question">{thisQ.question}</p>
+
         <div className="buttons options">
-          {currentQuestion.options.map((option, index) => (
-            <button
-              key={index}
-              onClick={() => selectOption(index)}
-              className={`buttons-button option-button ${
-                showAnswerResult
-                  ? index === currentQuestion.correct
-                    ? "correct"
-                    : index === selectedOption
-                    ? "incorrect"
-                    : ""
-                  : ""
-              }`}
-              disabled={showAnswerResult}
-            >
-              {option}
-            </button>
-          ))}
+          {thisQ.options.map((opt, idx) => {
+            /* decide class when feedback is shown */
+            let extraClass = "";
+            if (showFeedback && idx === selected) {
+              extraClass = isCorrect ? "correct" : "incorrect";
+            }
+            return (
+              <button
+                key={idx}
+                className={`buttons-button option-button ${extraClass}`}
+                disabled={showFeedback}
+                onClick={() => {
+                  if (showFeedback) return;
+                  setSelected(idx);
+                  setShowFeedback(true);
+                  if (idx === thisQ.correct) setCorrectCount((c) => c + 1);
+                }}
+              >
+                {opt}
+              </button>
+            );
+          })}
         </div>
-        {showAnswerResult && (
+
+        {showFeedback && (
           <div style={{ marginTop: "1rem" }}>
             {isCorrect ? (
-              <p className="correct-msg">✅ Correct! Good job.</p>
+              <p className="correct-msg">✅ Correct!</p>
             ) : (
-              <p className="incorrect-msg">
-                ❌ Incorrect. The right answer is:{" "}
-                {currentQuestion.options[currentQuestion.correct]}
-              </p>
+              <p className="incorrect-msg">❌ Incorrect.</p>
             )}
-            <button onClick={nextQuestion} className="buttons-button" style={{ marginTop: "1rem" }}>
-              Next Question
+
+            <button
+              className="buttons-button"
+              style={{ marginTop: "1rem" }}
+              onClick={() => {
+                setSelected(null);
+                setShowFeedback(false);
+                /* next question or results */
+                if (currentQ + 1 < questions.length) {
+                  setCurrentQ((q) => q + 1);
+                } else {
+                  setPage("result");
+                }
+              }}
+            >
+              {currentQ + 1 < questions.length ? "Next Question" : "Show Results"}
             </button>
           </div>
         )}
@@ -204,7 +251,11 @@ export default function App() {
         <button
           onClick={() => setPage("quote")}
           className="buttons-button"
-          style={{ background: "transparent", color: "var(--bridgestone-red)", border: "1px solid var(--bridgestone-red)" }}
+          style={{
+            background: "transparent",
+            color: "var(--bridgestone-red)",
+            border: "1px solid var(--bridgestone-red)",
+          }}
         >
           ← Back to Quotes
         </button>
