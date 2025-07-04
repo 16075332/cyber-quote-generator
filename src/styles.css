@@ -104,7 +104,7 @@ h1 {
   flex-wrap: wrap;
 }
 
-.buttons button {
+.buttons-button {
   padding: 0.65rem 1.6rem;
   font-size: 0.95rem;
   font-weight: 500;
@@ -116,12 +116,56 @@ h1 {
   transition: background 0.25s, transform 0.12s;
 }
 
-.buttons button:hover {
+.buttons-button:hover {
   background: var(--bridgestone-red-dark);
 }
 
-.buttons button:active {
+.buttons-button:active {
   transform: translateY(1px);
+}
+
+/* Quiz option buttons */
+.option-button {
+  min-width: 200px;
+  text-align: left;
+}
+
+.option-button.correct {
+  background-color: #2ecc40; /* green */
+  color: #fff;
+}
+
+.option-button.incorrect {
+  background-color: #ff4136; /* red */
+  color: #fff;
+}
+
+/* ──────────────────────────────
+   ✨ QUIZ CARD
+   ────────────────────────────── */
+.quiz-card h2 {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  color: var(--bridgestone-red);
+}
+
+.question {
+  font-weight: 600;
+}
+
+/* ──────────────────────────────
+   ✨ ANSWER FEEDBACK
+   ────────────────────────────── */
+.correct-msg {
+  color: #2ecc40;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.incorrect-msg {
+  color: #ff4136;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
 /* ──────────────────────────────
@@ -138,5 +182,10 @@ h1 {
 
   h1 {
     font-size: 1.7rem;
+  }
+
+  .option-button {
+    min-width: unset;
+    font-size: 0.9rem;
   }
 }

@@ -16,8 +16,7 @@ function QuoteCard({ quote, author, onNewQuote }) {
       <p className="author">— {author}</p>
       <div className="buttons">
         <button onClick={onNewQuote}>New Quote 🔁</button>
-        <button onClick={copyToClipboard}>Copy 📋</button>
-        <button onClick={tweetQuote}>Tweet 🐦</button>
+        
       </div>
     </div>
   );
