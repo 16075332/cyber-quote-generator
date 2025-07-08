@@ -1,191 +1,232 @@
-/* ──────────────────────────────
-   ✨ GLOBAL LAYOUT & TYPOGRAPHY
-   ────────────────────────────── */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
-
-:root {
-  --bridgestone-red: #c8102e;
-  --bridgestone-red-dark: #8d001a;
-  --bg-dark-1: #e1d7d7;   /* near‑black */
-  --bg-dark-2: #1b1b1b;   /* charcoal */
-  --text-light: #ffffff;
-  --text-muted: #d1d1d1;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
+/* Base Styles */
 body {
-  font-family: "Inter", "Segoe UI", sans-serif;
-  background: linear-gradient(135deg, var(--bg-dark-1) 0%, var(--bg-dark-2) 100%);
-  color: var(--text-light);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  padding: 2rem;
-  min-height: 100vh;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: #333;
+  line-height: 1.6;
 }
 
-/* ──────────────────────────────
-   ✨ APP CONTAINER
-   ────────────────────────────── */
 .app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
   text-align: center;
-  max-width: 680px;
-  width: 100%;
-  padding: 2.5rem 1.5rem;
 }
 
-/* ──────────────────────────────
-   ✨ BRANDING
-   ────────────────────────────── */
 .logo {
-  max-width: 400px;
-  width: 65%;
-  margin-bottom: 1.25rem;
-  filter: drop-shadow(0 0 10px var(--bridgestone-red));
+  height: 60px;
+  margin-bottom: 1rem;
 }
 
 h1 {
-  color: var(--bridgestone-red);
-  font-size: 2rem;
-  margin: 0 0 0.25rem;
-  letter-spacing: 0.5px;
+  color: #e31937;
+  margin-bottom: 0.5rem;
 }
 
 .slogan {
-  font-style: italic;
-  color: var(--text-muted);
-  margin-bottom: 2.5rem;
-  font-size: 1rem;
-}
-
-/* ──────────────────────────────
-   ✨ QUOTE CARD
-   ────────────────────────────── */
-.quote-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 4px solid var(--bridgestone-red);
-  padding: 2rem 2.25rem;
-  border-radius: 14px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  transition: transform 0.2s ease;
-}
-
-.quote-card:hover {
-  transform: translateY(-4px);
-}
-
-.quote {
-  font-size: 1.55rem;
-  line-height: 1.45;
-  margin-bottom: 1.25rem;
-}
-
-.author {
-  font-size: 1.05rem;
+  color: #333;
   font-weight: 500;
-  color: var(--bridgestone-red);
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
 }
 
-/* ──────────────────────────────
-   ✨ BUTTONS
-   ────────────────────────────── */
+/* Button Styles */
+.btn-red {
+  background-color: #e31937;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin: 0.5rem;
+}
+
+.btn-red:hover {
+  background-color: #c0102d;
+}
+
+.btn-red:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 0.75rem;
   flex-wrap: wrap;
+  margin-top: 1.5rem;
 }
 
-.buttons-button {
-  padding: 0.65rem 1.6rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  border: none;
-  border-radius: 30px;
-  background: var(--bridgestone-red);
-  color: var(--text-light);
-  cursor: pointer;
-  transition: background 0.25s, transform 0.12s;
+/* Form Styles */
+.form-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
-.buttons-button:hover {
-  background: var(--bridgestone-red-dark);
+.form-input.invalid {
+  border-color: #e31937;
 }
 
-.buttons-button:active {
-  transform: translateY(1px);
+.error-message {
+  color: #e31937;
+  font-size: 0.85rem;
+  text-align: left;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
 }
 
-/* Quiz option buttons */
-.option-button {
-  min-width: 200px;
+/* Quiz Styles */
+.quiz-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin: 0 auto;
   text-align: left;
 }
 
-.option-button.correct {
-  background-color: #2ecc40; /* green */
-  color: #fff;
-}
-
-.option-button.incorrect {
-  background-color: #ff4136; /* red */
-  color: #fff;
-}
-
-/* ──────────────────────────────
-   ✨ QUIZ CARD
-   ────────────────────────────── */
-.quiz-card h2 {
-  margin-top: 0;
-  margin-bottom: 1.25rem;
-  color: var(--bridgestone-red);
-}
-
 .question {
-  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
 }
 
-/* ──────────────────────────────
-   ✨ ANSWER FEEDBACK
-   ────────────────────────────── */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.option-btn {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.option-btn:hover {
+  background: #f5f5f5;
+}
+
+.option-btn.correct {
+  background-color: #e8f5e9;
+  border-color: #4caf50;
+  color: #2e7d32;
+}
+
+.option-btn.incorrect {
+  background-color: #ffebee;
+  border-color: #f44336;
+  color: #c62828;
+}
+
+.feedback {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
 .correct-msg {
-  color: #2ecc40;
-  font-weight: 600;
-  font-size: 1.1rem;
+  color: #4caf50;
+  font-weight: 500;
 }
 
 .incorrect-msg {
-  color: #ff4136;
-  font-weight: 600;
-  font-size: 1.1rem;
+  color: #f44336;
 }
 
-/* ──────────────────────────────
-   ✨ RESPONSIVE TWEAKS
-   ────────────────────────────── */
-@media (max-width: 480px) {
-  .logo {
-    max-width: 200px;
-  }
+/* Results Styles */
+.results {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
 
-  .quote {
-    font-size: 1.35rem;
-  }
+.score {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
 
-  h1 {
-    font-size: 1.7rem;
-  }
+.status {
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
 
-  .option-button {
-    min-width: unset;
-    font-size: 0.9rem;
+.status.passed {
+  color: #4caf50;
+}
+
+.status.failed {
+  color: #f44336;
+}
+
+/* Topics Styles */
+.topics {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.topic-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+/* Quote Styles */
+.quote-card {
+  background: rgb(221, 219, 219);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.quote {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.author {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+/* Footer */
+.footer {
+  margin-top: 3rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app {
+    padding: 1rem;
+  }
+  
+  .buttons {
+    flex-direction: column;
+  }
+  
+  .btn-red {
+    width: 100%;
+    margin: 0.5rem 0;
   }
 }
