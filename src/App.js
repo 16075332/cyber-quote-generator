@@ -191,12 +191,20 @@ export default function App() {
     doc.setFontSize(28);
     doc.setTextColor(0, 0, 0);
     doc.setFont("helvetica", "bold");
-    doc.text("CYBERSECURITY AWARENESS CERTIFICATE", 148, 60, null, null, "center");
-    
-    // Decorative line
+    const certTitle = "CYBERSECURITY AWARENESS CERTIFICATE";
+    doc.text(certTitle, 148, 60, null, null, "center");
+
+    // Decorative line matching title width
     doc.setDrawColor(200, 0, 0);
     doc.setLineWidth(1);
-    doc.line(60, 60, 247, 60);
+
+    // Measure title width in points (approximate, as jsPDF doesn't provide exact text width for all fonts)
+    const titleWidth = doc.getTextWidth(certTitle);
+    // Center the line under the title
+    const lineY = 63;
+    const lineStartX = 148 - titleWidth / 2;
+    const lineEndX = 148 + titleWidth / 2;
+    doc.line(lineStartX, lineY, lineEndX, lineY);
     
     // Awarded to text
     doc.setFontSize(16);
