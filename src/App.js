@@ -184,8 +184,13 @@ export default function App() {
     doc.setFillColor(255, 255, 255);
     doc.rect(15, 15, 267, 180, 'F');
     
-    // Add logo
-    doc.addImage(logo, "PNG", 30, 25, 60, 20);
+    // Add logo centered at the top
+    // Logo width: 60, height: 20, page width: 297
+    const logoWidth = 60;
+    const logoHeight = 20;
+    const pageWidth = 297;
+    const logoX = (pageWidth - logoWidth) / 2;
+    doc.addImage(logo, "PNG", logoX, 25, logoWidth, logoHeight);
     
     // Certificate title
     doc.setFontSize(28);
@@ -215,6 +220,7 @@ export default function App() {
     doc.setFontSize(24);
     doc.setFont("helvetica", "bold");
     doc.text(user.name.toUpperCase(), 148, 100, null, null, "center");
+
     
     // Details section
     doc.setFontSize(14);
